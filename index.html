@@ -148,8 +148,8 @@ section.block{padding-block:clamp(72px,10vw,128px);position:relative}
 .cause{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
 .cause p{color:var(--muted);max-width:52ch;font-weight:300;font-size:1.05rem}
 .math{position:relative;padding:40px 36px;display:grid;gap:18px;text-align:center;background:var(--ink-2);border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);outline:1px solid color-mix(in srgb,var(--gold) 25%,transparent);outline-offset:8px}
-.math .row{display:flex;justify-content:space-between;gap:16px;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line);padding-bottom:12px;text-align:left}
-.math .row b{font-weight:600}
+.math .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line);padding-bottom:12px;text-align:left}
+.math .row b{font-weight:600;text-align:right}
 .math .total{font-family:var(--f-display);font-size:clamp(3.2rem,8vw,4.8rem);line-height:1;font-variant-numeric:lining-nums}
 .math small{color:var(--muted);font-size:.8rem}
 @media (max-width:860px){.cause{grid-template-columns:minmax(0,1fr);gap:48px}}
@@ -161,11 +161,30 @@ section.block{padding-block:clamp(72px,10vw,128px);position:relative}
 .menu-card .tr{top:10px;right:10px;border-left:0;border-bottom:0}
 .menu-card .bl{bottom:10px;left:10px;border-right:0;border-top:0}
 .menu-card .br{bottom:10px;right:10px;border-left:0;border-top:0}
-.menu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:44px;text-align:center;margin-top:44px}
+.menu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:44px;text-align:center;margin-top:32px;align-items:start}
 .menu h3{font-style:italic;margin-bottom:22px;font-size:1.6rem}
-.menu ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-family:var(--f-display);font-size:1.15rem}
-.menu li{transition:color .25s,letter-spacing .25s}
-.menu li:hover{color:var(--gold-hi);letter-spacing:.02em}
+.menu .dishes{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.menu-hint{text-align:center;margin-top:22px;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.menu-note{text-align:center;margin:40px auto 0;max-width:60ch;font-size:.8rem;color:var(--muted);font-weight:300}
+.dish summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:6px 4px;font-family:var(--f-display);font-size:1.15rem;transition:color .25s,letter-spacing .25s}
+.dish summary::-webkit-details-marker{display:none}
+.dish summary::after{content:"";width:6px;height:6px;border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);transform:rotate(45deg) translateY(-3px);transition:transform .3s;opacity:.7}
+.dish summary:hover,.dish[open] summary{color:var(--gold-hi);letter-spacing:.02em}
+.dish[open] summary::after{transform:rotate(225deg) translateY(-1px);opacity:1}
+.dish-body{display:grid;justify-items:center;gap:12px;padding:10px 0 22px;animation:dishIn .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes dishIn{from{opacity:0;transform:translateY(-10px) scale(.97);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.dish-ph{position:relative;margin:0;width:100%;max-width:320px;box-shadow:0 24px 50px -24px color-mix(in srgb,var(--gold) 45%,transparent);aspect-ratio:4/3;overflow:hidden;border-radius:4px;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);background:var(--ink-3)}
+.dish-ph img{width:100%;height:100%;object-fit:cover;display:block;animation:zoomIn 1.4s cubic-bezier(.2,.8,.2,1) both}
+@keyframes zoomIn{from{transform:scale(1.12)}to{transform:scale(1)}}
+.dish-ph .plate{display:none}
+.dish-ph.noimg img{display:none}
+.dish-ph.noimg .plate{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,var(--ink-2) 0 34%,color-mix(in srgb,var(--gold) 55%,transparent) 34.4% 35%,var(--ink-3) 35.4% 46%,color-mix(in srgb,var(--gold) 30%,transparent) 46.4% 47%,var(--ink-3) 47.4%)}
+.dish-ph.noimg .plate span{font-family:var(--f-script);color:var(--gold);font-size:1.5rem;line-height:1.1;max-width:9ch}
+.dish-desc{max-width:32ch;font-family:var(--f-display);font-style:italic;font-size:1.02rem;line-height:1.45;color:var(--ivory)}
+.ing{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:320px}
+.ing li{font-size:.74rem;padding:4px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--gold) 28%,transparent);color:var(--ivory);background:color-mix(in srgb,var(--ink) 50%,transparent)}
+.allergens{font-size:.72rem;letter-spacing:.06em;color:var(--muted)}
+.allergens b{color:var(--gold);font-weight:600}
 @media (max-width:760px){.menu{grid-template-columns:minmax(0,1fr);gap:36px}}
 
 /* dress + venue */
@@ -295,7 +314,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
         <a class="btn" href="https://buy.stripe.com/00w7sK5UTfSw3xAfZqfIs02" target="_blank" rel="noopener"><span data-i18n="buyLong">Buy your ticket · €70</span><span class="arr" aria-hidden="true">→</span></a>
         <a class="btn ghost" href="#evening"><span data-i18n="discover">Discover the evening</span></a>
       </div>
-      <p class="seats rise d6" data-i18n-html="seats"><b>100 seats only</b> · €10 of every ticket goes to charity</p>
+      <p class="seats rise d6" data-i18n-html="seats"><b>€10 of every ticket</b> · goes to an orphanage in southern Morocco</p>
     </div>
   </section>
 
@@ -351,14 +370,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       <div class="head reveal" style="margin:0">
         <span class="script" data-i18n="cScript">for a cause</span>
         <h2 data-i18n="cTitle">Every ticket helps a child in southern Morocco</h2>
-        <p data-i18n="cText">€10 from each ticket goes to an orphanage in the south of Morocco. With all 100 seats filled, the evening raises €1,000 for the children before the raffle is even drawn.</p>
+        <p data-i18n="cText">€10 from each ticket goes to an orphanage in the south of Morocco. Every guest who joins us makes a direct contribution to the children, and the raffle adds even more to the evening’s gift.</p>
       </div>
       <div class="math reveal" aria-label="Donation breakdown">
         <div class="row"><span data-i18n="mTicket">Ticket</span><b>€70</b></div>
         <div class="row"><span data-i18n="mDon">Donation per ticket</span><b>€10</b></div>
-        <div class="row"><span data-i18n="mSeats">Seats</span><b>100</b></div>
-        <div class="total gilt" id="total">€1,000</div>
-        <small data-i18n="mNote">raised for the orphanage when the event is sold out</small>
+        <div class="row"><span data-i18n="mFor">Beneficiary</span><b data-i18n="mForV">Orphanage, southern Morocco</b></div>
+        <div class="total gilt" id="total">€10</div>
+        <small data-i18n="mNote">donated directly to the children from every ticket</small>
       </div>
     </div>
   </section>
@@ -372,20 +391,91 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
           <h2 data-i18n="menuLabel">The menu</h2>
           <div class="deco" aria-hidden="true"><i></i></div>
         </div>
+        <p class="menu-hint" data-i18n="menuHint">Tap a dish to discover it</p>
         <div class="menu">
           <div>
             <h3 class="gilt" data-i18n="mainDishes">Main dishes</h3>
-            <ul><li>Jollof Rice</li><li>Fried Rice</li><li>Pepper Chicken</li><li>Pepper Beef</li><li>Pepper Turkey</li><li>Soft Roasted Chicken Wings</li><li>White Rice &amp; Stew</li></ul>
+            <ul class="dishes">
+              <li><details class="dish" name="dish"><summary>Jollof Rice</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/jollof-rice.jpg" alt="Jollof Rice" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Jollof Rice</span></span></figure>
+                <p class="dish-desc" data-i18n="d_jollof_rice">West Africa’s celebrated party rice, slow-cooked in a smoky tomato and pepper sauce.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_rice">Long-grain rice</li><li data-i18n="i_tomato">Tomatoes</li><li data-i18n="i_redpep">Red bell pepper</li><li data-i18n="i_scotch">Scotch bonnet chilli</li><li data-i18n="i_onion">Onion</li><li data-i18n="i_paste">Tomato paste</li><li data-i18n="i_stock">Stock</li><li data-i18n="i_thyme">Thyme</li><li data-i18n="i_curry">Curry powder</li><li data-i18n="i_bay">Bay leaf</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Fried Rice (Vegetarian)</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/fried-rice.jpg" alt="Fried Rice (Vegetarian)" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Fried Rice (Vegetarian)</span></span></figure>
+                <p class="dish-desc" data-i18n="d_fried_rice">Fragrant rice stir-fried with sweet corn, peas, carrots and green beans.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_rice">Long-grain rice</li><li data-i18n="i_corn">Sweet corn</li><li data-i18n="i_peas">Green peas</li><li data-i18n="i_carrot">Carrots</li><li data-i18n="i_beans">Green beans</li><li data-i18n="i_onion">Onion</li><li data-i18n="i_curry">Curry powder</li><li data-i18n="i_thyme">Thyme</li><li data-i18n="i_vstock">Vegetable stock</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Pepper Chicken</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/pepper-chicken.jpg" alt="Pepper Chicken" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Pepper Chicken</span></span></figure>
+                <p class="dish-desc" data-i18n="d_pepper_chicken">Tender chicken pieces tossed in a rich, spicy pepper sauce.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_chicken">Chicken</li><li data-i18n="i_redpep">Red bell pepper</li><li data-i18n="i_scotch">Scotch bonnet chilli</li><li data-i18n="i_onion">Onion</li><li data-i18n="i_garlic">Garlic</li><li data-i18n="i_ginger">Ginger</li><li data-i18n="i_thyme">Thyme</li><li data-i18n="i_curry">Curry powder</li><li data-i18n="i_stock">Stock</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Pepper Turkey</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/pepper-turkey.jpg" alt="Pepper Turkey" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Pepper Turkey</span></span></figure>
+                <p class="dish-desc" data-i18n="d_pepper_turkey">Seasoned turkey, roasted until golden and coated in a fiery pepper sauce.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_turkey">Turkey</li><li data-i18n="i_redpep">Red bell pepper</li><li data-i18n="i_scotch">Scotch bonnet chilli</li><li data-i18n="i_onion">Onion</li><li data-i18n="i_garlic">Garlic</li><li data-i18n="i_ginger">Ginger</li><li data-i18n="i_thyme">Thyme</li><li data-i18n="i_curry">Curry powder</li><li data-i18n="i_stock">Stock</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Soft Roasted Chicken Wings</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/chicken-wings.jpg" alt="Soft Roasted Chicken Wings" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Soft Roasted Chicken Wings</span></span></figure>
+                <p class="dish-desc" data-i18n="d_chicken_wings">Oven-roasted wings with a golden, gently spiced crust.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_wings">Chicken wings</li><li data-i18n="i_garlic">Garlic</li><li data-i18n="i_ginger">Ginger</li><li data-i18n="i_paprika">Paprika</li><li data-i18n="i_thyme">Thyme</li><li data-i18n="i_blackpep">Black pepper</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+            </ul>
           </div>
           <div>
             <h3 class="gilt" data-i18n="sideDishes">Side dishes</h3>
-            <ul><li>Gizzard Dodo</li><li>Fried Plantain</li><li>Coleslaw</li><li>Salad</li><li>Moi Moi</li><li>Pepper Soup</li></ul>
+            <ul class="dishes">
+              <li><details class="dish" name="dish"><summary>Dodo Gizzard</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/dodo-gizzard.jpg" alt="Dodo Gizzard" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Dodo Gizzard</span></span></figure>
+                <p class="dish-desc" data-i18n="d_dodo_gizzard">A Nigerian favourite: chicken gizzards and sweet fried plantain in a spicy pepper sauce.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_gizzard">Chicken gizzards</li><li data-i18n="i_plantain">Ripe plantain</li><li data-i18n="i_greenpep">Green & yellow peppers</li><li data-i18n="i_scotch">Scotch bonnet chilli</li><li data-i18n="i_onion">Onion</li><li data-i18n="i_tomato">Tomatoes</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Fried Plantains</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/fried-plantains.jpg" alt="Fried Plantains" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Fried Plantains</span></span></figure>
+                <p class="dish-desc" data-i18n="d_fried_plantains">Ripe plantain fried until caramelised, sweet and golden.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_plantain">Ripe plantain</li><li data-i18n="i_salt">Salt</li><li data-i18n="i_oil">Vegetable oil</li></ul>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Salad</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/salad.jpg" alt="Salad" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Salad</span></span></figure>
+                <p class="dish-desc" data-i18n="d_salad">A fresh, crisp salad to balance the spices of the evening.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_tomato">Tomatoes</li><li data-i18n="i_cucumber">Cucumber</li><li data-i18n="i_redonion">Red onion</li><li data-i18n="i_greenpep">Green & yellow peppers</li><li data-i18n="i_olives">Black olives</li><li data-i18n="i_feta">Feta</li><li data-i18n="i_vinaigrette">Herb vinaigrette</li></ul><p class="allergens"><span data-i18n="contains">Contains</span> <b data-i18n="a_milk">Milk</b></p>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Moi Moi</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/moi-moi.jpg" alt="Moi Moi" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Moi Moi</span></span></figure>
+                <p class="dish-desc" data-i18n="d_moi_moi">Steamed bean pudding of black-eyed beans, peppers and onions, with a boiled egg at its heart.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_blackeyed">Black-eyed beans</li><li data-i18n="i_redpep">Red bell pepper</li><li data-i18n="i_scotch">Scotch bonnet chilli</li><li data-i18n="i_onion">Onion</li><li data-i18n="i_crayfish">Ground crayfish</li><li data-i18n="i_egg">Boiled egg</li><li data-i18n="i_stock">Stock</li><li data-i18n="i_oil">Vegetable oil</li></ul><p class="allergens"><span data-i18n="contains">Contains</span> <b data-i18n="a_crust">Crustaceans</b> · <b data-i18n="a_egg">Egg</b></p>
+              </div></details></li>
+            </ul>
           </div>
           <div>
             <h3 class="gilt">Small Chops</h3>
-            <ul><li>Puff-Puff</li><li>Spring Roll</li><li>Samosa</li></ul>
+            <ul class="dishes">
+              <li><details class="dish" name="dish"><summary>Puff Puff</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/puff-puff.jpg" alt="Puff Puff" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Puff Puff</span></span></figure>
+                <p class="dish-desc" data-i18n="d_puff_puff">Soft, fluffy dough balls fried until golden and dusted with sugar.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_flour">Wheat flour</li><li data-i18n="i_sugar">Sugar</li><li data-i18n="i_yeast">Yeast</li><li data-i18n="i_nutmeg">Nutmeg</li><li data-i18n="i_oil">Vegetable oil</li><li data-i18n="i_icing">Icing sugar</li></ul><p class="allergens"><span data-i18n="contains">Contains</span> <b data-i18n="a_gluten">Gluten</b></p>
+              </div></details></li>
+              <li><details class="dish" name="dish"><summary>Spring Roll</summary><div class="dish-body">
+                <figure class="dish-ph"><img src="assets/menu/spring-roll.jpg" alt="Spring Roll" loading="lazy" onerror="this.parentNode.classList.add('noimg')"><span class="plate" aria-hidden="true"><span>Spring Roll</span></span></figure>
+                <p class="dish-desc" data-i18n="d_spring_roll">Light rolls packed with crunchy, fresh vegetables.</p>
+                <span class="label" data-i18n="ingredients">Ingredients</span>
+                <ul class="ing"><li data-i18n="i_wrapper">Spring roll wrappers</li><li data-i18n="i_vermicelli">Rice vermicelli</li><li data-i18n="i_carrot">Carrots</li><li data-i18n="i_cucumber">Cucumber</li><li data-i18n="i_cabbage">Cabbage</li><li data-i18n="i_herbs">Fresh herbs</li></ul>
+              </div></details></li>
+            </ul>
           </div>
         </div>
+        <p class="menu-note" data-i18n="menuNote">Typical recipes; ingredients may vary slightly. Allergies: tell us when you buy your ticket.</p>
       </div>
     </div>
   </section>
@@ -468,7 +558,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
         <details><summary data-i18n="q1">How do I receive my ticket?</summary><p data-i18n="a1">After payment you receive a confirmation email from Stripe. Your name is added to the guest list; show the email or simply give your name at the entrance.</p></details>
         <details><summary data-i18n="q2">Can I buy tickets for other people?</summary><p data-i18n="a2">Each payment covers one guest. To bring others, complete one payment per guest using their name and email, so everyone is on the guest list.</p></details>
         <details><summary data-i18n="q3">What is included in the €70?</summary><p data-i18n="a3">Entry, the full buffet, champagne tasting, the live entertainment and the DJ set. €10 of the price is donated to the orphanage.</p></details>
-        <details><summary data-i18n="q4">I have a food allergy. What should I do?</summary><p data-i18n="a4">Mention it in the "Food allergies" field when you pay, and we will pass it on to the caterer.</p></details>
+        <details><summary data-i18n="q4">I have a food allergy. What should I do?</summary><p data-i18n="a4">Write it in the "Allergies / dietary needs" field when you pay, and we will pass it on to the caterer.</p></details>
         <details><summary data-i18n="q5">Who can I contact?</summary><p data-i18n="a5">Write to alc.luxembourg@gmail.com and the organising team will get back to you.</p></details>
       </div>
     </div>
@@ -480,7 +570,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
         <div class="main">
           <span class="label">ALC × L.A.W.M · 11.12.2026 · Kopstal</span>
           <h2 data-i18n="stubTitle">Reserve your seat before they are gone</h2>
-          <p data-i18n="stubText">Secure payment by card, Apple Pay or Google Pay through Stripe. Only 100 seats are available.</p>
+          <p data-i18n="stubText">Secure payment by card, Apple Pay or Google Pay through Stripe. Your confirmation is sent instantly by email.</p>
           <div><a class="btn" href="https://buy.stripe.com/00w7sK5UTfSw3xAfZqfIs02" target="_blank" rel="noopener"><span data-i18n="buyLong">Buy your ticket · €70</span><span class="arr" aria-hidden="true">→</span></a></div>
         </div>
         <div class="side">
@@ -514,12 +604,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
     buyShort:"Acheter",present:"ALC × L.A.W.M présentent",date:"Vendredi 11 décembre 2026",time:"Dès 18h00",
     lede:"Une soirée de musique, de cuisine africaine et de champagne, entre professionnels du Luxembourg, au profit des enfants d’un orphelinat du sud du Maroc.",
     cdD:"Jours",cdH:"Heures",cdM:"Min",cdS:"Sec",
-    buyLong:"Acheter votre billet · 70 €",discover:"Découvrir la soirée",seats:"<b>100 places seulement</b> · 10 € de chaque billet reversés à la charité",
+    buyLong:"Acheter votre billet · 70 €",discover:"Découvrir la soirée",seats:"<b>10 € de chaque billet</b> · reversés à un orphelinat du sud du Maroc",
     evScript:"la soirée",evTitle:"Ce qui vous attend",entLabel:"Divertissement",ent1:"Chanteurs en live",ent2:"Spectacle de clown",ent3:"DJ international",ent4:"Intervenants (keynote speakers)",
     djNote:"Afrobeats, afro, amapiano, rap, hip-hop et plus encore.",expLabel:"Expérience",exp1:"Dégustation de champagne",exp2:"Tombola avec cadeaux à gagner",exp3:"Un grand buffet africain",
     causeLabel:"Une belle cause",cause1:"Soutien à un orphelinat du sud du Maroc",causeNote:"Une partie de chaque billet est reversée directement.",
-    cScript:"pour une cause",cTitle:"Chaque billet aide un enfant du sud du Maroc",cText:"10 € de chaque billet sont reversés à un orphelinat du sud du Maroc. Avec les 100 places vendues, la soirée réunit 1 000 € pour les enfants, avant même le tirage de la tombola.",
-    mTicket:"Billet",mDon:"Don par billet",mSeats:"Places",mNote:"reversés à l’orphelinat si l’événement affiche complet",
+    cScript:"pour une cause",cTitle:"Chaque billet aide un enfant du sud du Maroc",cText:"10 € de chaque billet sont reversés à un orphelinat du sud du Maroc. Chaque invité contribue directement au soutien des enfants, et la tombola vient encore enrichir le don de la soirée.",
+    mTicket:"Billet",mDon:"Don par billet",mSeats:"Places",mNote:"reversés directement aux enfants pour chaque billet",mFor:"Bénéficiaire",mForV:"Orphelinat, sud du Maroc",
     menuScript:"à la carte",menuLabel:"Le menu",mainDishes:"Plats principaux",sideDishes:"Accompagnements",
     infoLabel:"Infos pratiques",infoTitle:"Habillez-vous, et rejoignez-nous à Kopstal",dressLabel:"Dress code",dress1:"Tenue africaine traditionnelle",or:"ou",
     dressNote:"Sortez votre plus beau wax, boubou, agbada ou kente, ou une tenue black tie classique.",venueLabel:"Lieu",venueNote:"Ouverture des portes à 18h00.",map:"Ouvrir dans Google Maps",
@@ -530,10 +620,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
     q1:"Comment vais-je recevoir mon billet ?",a1:"Après le paiement, vous recevez un email de confirmation de Stripe. Votre nom est ajouté à la liste des invités : présentez l’email ou donnez simplement votre nom à l’entrée.",
     q2:"Puis-je acheter des billets pour d’autres personnes ?",a2:"Chaque paiement correspond à un invité. Pour venir à plusieurs, effectuez un paiement par invité avec son nom et son email, afin que chacun soit sur la liste.",
     q3:"Qu’est-ce qui est inclus dans les 70 € ?",a3:"L’entrée, le buffet complet, la dégustation de champagne, les animations et le set du DJ. 10 € du prix sont reversés à l’orphelinat.",
-    q4:"J’ai une allergie alimentaire. Que faire ?",a4:"Indiquez-la dans le champ « Food allergies » lors du paiement, nous la transmettrons au traiteur.",
+    q4:"J’ai une allergie alimentaire. Que faire ?",a4:"Indiquez-la dans le champ « Allergies / dietary needs » lors du paiement, nous la transmettrons au traiteur.",
     q5:"Qui contacter ?",a5:"Écrivez à alc.luxembourg@gmail.com, l’équipe d’organisation vous répondra.",
-    stubTitle:"Réservez votre place avant qu’il ne soit trop tard",stubText:"Paiement sécurisé par carte, Apple Pay ou Google Pay via Stripe. Seulement 100 places disponibles.",
-    lookScript:"inspiration",lookTitle:"Idées de dress code",lookText:"Du kente au takchita, de l’agbada à la habesha kemis : célébrez tout le continent. Quelques tenues pour vous inspirer.",swipe:"Faites défiler →",admit:"Entrée",incl:"dont 10 € pour la charité",barNote:"11 déc. · Kopstal"
+    stubTitle:"Réservez votre place avant qu’il ne soit trop tard",stubText:"Paiement sécurisé par carte, Apple Pay ou Google Pay via Stripe. Votre confirmation est envoyée immédiatement par email.",
+    lookScript:"inspiration",lookTitle:"Idées de dress code",lookText:"Du kente au takchita, de l’agbada à la habesha kemis : célébrez tout le continent. Quelques tenues pour vous inspirer.",swipe:"Faites défiler →",i_rice:"Riz long grain",i_tomato:"Tomates",i_redpep:"Poivron rouge",i_scotch:"Piment scotch bonnet",i_onion:"Oignon",i_paste:"Concentré de tomate",i_stock:"Bouillon",i_thyme:"Thym",i_curry:"Curry en poudre",i_bay:"Laurier",i_oil:"Huile végétale",i_carrot:"Carottes",i_peas:"Petits pois",i_corn:"Maïs doux",i_beans:"Haricots verts",i_liver:"Foie de bœuf",i_chicken:"Poulet",i_beef:"Bœuf",i_turkey:"Dinde",i_garlic:"Ail",i_ginger:"Gingembre",i_wings:"Ailes de poulet",i_paprika:"Paprika",i_blackpep:"Poivre noir",i_meat:"Bœuf ou poulet",i_gizzard:"Gésiers de poulet",i_plantain:"Banane plantain mûre",i_salt:"Sel",i_cabbage:"Chou",i_mayo:"Mayonnaise",i_lettuce:"Laitue",i_cucumber:"Concombre",i_egg:"Œuf dur",i_saladcream:"Sauce salade",i_blackeyed:"Haricots à œil noir",i_crayfish:"Écrevisses moulues",i_goat:"Viande de chèvre ou poisson-chat",i_pspice:"Épices pepper soup",i_scent:"Feuilles de basilic africain",i_flour:"Farine de blé",i_sugar:"Sucre",i_yeast:"Levure",i_nutmeg:"Noix de muscade",i_wrapper:"Feuilles de pâte",i_mince:"Bœuf haché",i_potato:"Pomme de terre",a_gluten:"Gluten",a_egg:"Œuf",a_crust:"Crustacés",a_fish:"Poisson",ingredients:"Ingrédients",contains:"Contient",menuHint:"Touchez un plat pour le découvrir",menuNote:"Recettes typiques, les ingrédients peuvent varier légèrement. Allergies : indiquez-les lors de l’achat de votre billet.",d_jollof_rice:"Le célèbre riz de fête d’Afrique de l’Ouest, mijoté dans une sauce tomate et poivron au goût fumé.",d_fried_rice:"Riz parfumé sauté avec maïs doux, petits pois, carottes et haricots verts.",d_pepper_chicken:"Morceaux de poulet tendres enrobés d’une sauce pimentée généreuse.",d_pepper_turkey:"Dinde assaisonnée, rôtie jusqu’à être dorée puis nappée d’une sauce pimentée.",d_chicken_wings:"Ailes rôties au four, à la peau dorée et délicatement épicée.",d_dodo_gizzard:"Un classique nigérian : gésiers de poulet et banane plantain frite dans une sauce pimentée.",d_fried_plantains:"Banane plantain mûre frite jusqu’à caramélisation, douce et dorée.",d_salad:"Une salade fraîche et croquante pour équilibrer les épices de la soirée.",d_moi_moi:"Flan de haricots à œil noir cuit à la vapeur, aux poivrons et oignons, avec un œuf dur au cœur.",d_puff_puff:"Beignets moelleux frits et dorés, saupoudrés de sucre.",d_spring_roll:"Rouleaux légers garnis de légumes frais et croquants.",i_rice:"Riz long grain",i_tomato:"Tomates",i_redpep:"Poivron rouge",i_scotch:"Piment scotch bonnet",i_onion:"Oignon",i_paste:"Concentré de tomate",i_stock:"Bouillon",i_vstock:"Bouillon de légumes",i_thyme:"Thym",i_curry:"Curry en poudre",i_bay:"Laurier",i_oil:"Huile végétale",i_carrot:"Carottes",i_peas:"Petits pois",i_corn:"Maïs doux",i_beans:"Haricots verts",i_chicken:"Poulet",i_turkey:"Dinde",i_garlic:"Ail",i_ginger:"Gingembre",i_wings:"Ailes de poulet",i_paprika:"Paprika",i_blackpep:"Poivre noir",i_gizzard:"Gésiers de poulet",i_plantain:"Banane plantain mûre",i_greenpep:"Poivrons verts et jaunes",i_salt:"Sel",i_cucumber:"Concombre",i_redonion:"Oignon rouge",i_olives:"Olives noires",i_feta:"Feta",i_vinaigrette:"Vinaigrette aux herbes",i_egg:"Œuf dur",i_blackeyed:"Haricots à œil noir",i_crayfish:"Écrevisses moulues",i_flour:"Farine de blé",i_sugar:"Sucre",i_yeast:"Levure",i_nutmeg:"Noix de muscade",i_icing:"Sucre glace",i_wrapper:"Feuilles à rouleaux",i_cabbage:"Chou",i_vermicelli:"Vermicelles de riz",i_herbs:"Herbes fraîches",i_lemon:"Citron",a_gluten:"Gluten",a_egg:"Œuf",a_crust:"Crustacés",a_milk:"Lait",admit:"Entrée",incl:"dont 10 € pour la charité",barNote:"11 déc. · Kopstal"
   };
   var nodes=document.querySelectorAll("[data-i18n]"), htmlNodes=document.querySelectorAll("[data-i18n-html]"), EN={}, ENH={};
   nodes.forEach(function(n){EN[n.dataset.i18n]=n.textContent;});
@@ -545,11 +635,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
     htmlNodes.forEach(function(n){var k=n.dataset.i18nHtml,v=l==="fr"?FR[k]:ENH[k]; if(v) n.innerHTML=v;});
     document.documentElement.lang=l;
     document.querySelectorAll(".lang button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===l));});
-    var t=document.getElementById("total"); if(t && !counting) t.textContent=fmt(1000);
+    var t=document.getElementById("total"); if(t && !counting) t.textContent=fmt(10);
     try{localStorage.setItem("lang",l);}catch(e){}
   }
   function fmt(n){return lang==="fr" ? n.toLocaleString("fr-FR").replace(/ | /g," ")+" €" : "€"+n.toLocaleString("en-GB");}
   document.querySelectorAll(".lang button").forEach(function(b){b.addEventListener("click",function(){apply(b.dataset.lang);});});
+
+  /* ---------- menu: one dish open at a time ---------- */
+  var dishes=document.querySelectorAll(".dish");
+  dishes.forEach(function(d){d.addEventListener("toggle",function(){if(d.open) dishes.forEach(function(o){if(o!==d) o.open=false;});});});
 
   /* ---------- countdown (11 Dec 2026, 18:00 Luxembourg = 17:00 UTC) ---------- */
   var target=Date.UTC(2026,11,11,17,0,0), counting=false;
@@ -584,7 +678,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
         if(!e.isIntersecting) return; io.disconnect(); counting=true;
         var t0=performance.now();
         (function step(t){
-          var p=Math.min(1,(t-t0)/1800), v=Math.round(1000*(1-Math.pow(1-p,3)));
+          var p=Math.min(1,(t-t0)/1800), v=Math.round(10*(1-Math.pow(1-p,3)));
           total.textContent=fmt(v);
           if(p<1) requestAnimationFrame(step); else counting=false;
         })(t0);
